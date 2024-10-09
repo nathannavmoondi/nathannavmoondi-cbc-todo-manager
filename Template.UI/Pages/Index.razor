@@ -1,0 +1,65 @@
+﻿@page "/"
+@using Template.UI.Services
+@inject IJSRuntime JSRuntime
+@inject NavigationManager NavigationManager
+@inject TodoService TodosService
+
+<PageTitle>CBC Todo Manager</PageTitle>
+
+<form @onsubmit="Login">
+    <h3>Login</h3>
+
+    <label for="username">Username:</label>
+    <input id="username" @bind="Username" />
+
+    <label for="password">Password:</label>
+    <input id="password" type="text" @bind="Password" />    
+   
+
+    @if (!string.IsNullOrEmpty(ErrorMessage))
+    {
+     
+        <div class="alert alert-danger" role="alert">
+
+            <p>@ErrorMessage</p>
+
+        </div>
+    }
+    <br/>
+    <button class="btn btn-primary" type="submit" @ref="submitButton" @onclick="Login">Login</button>
+
+</form>  
+
+
+
+@code {
+    private string Username = "";
+    private string Password = "";
+    private string ErrorMessage { get; set; }
+    private bool IsFormSubmitted { get; set; }
+    private ElementReference submitButton;
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender)
+        {
+            //just playing with jsinterip
+            await JSRuntime.InvokeVoidAsync("setDefaultButton", submitButton);
+        }
+    }
+
+    private async void Login()
+    {
+        //todo call api in service to verify username/pw
+        var result = await TodosService.Login(Username, Password);
+
+        if (result == false)
+        {
+            ErrorMessage = "Invalid username or password";
+            StateHasChanged();
+        }
+          else
+            NavigationManager.NavigateTo("/todos");
+    }
+}

@@ -1,0 +1,97 @@
+﻿@page "/todos"
+@using Blazor_Template_Models
+@using Blazorise.Icons.FontAwesome
+@inject IJSRuntime JsRuntime
+@inject TodoService TodoService
+@inject NavigationManager NavigationManager
+
+@if (_loadingtodos)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    
+ <Button class="btn btn-success" @onclick="@(async() => await OnAddtodoClicked())">
+  Create New Todo
+ </Button>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Details</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (TodoDTO todo in _todos)
+            {
+                <tr>
+                    <td>@todo.Id</td>
+                    <td>@todo.Name</td>
+                    <td>@todo.Details</td>                                        
+                    <td>
+                        <span class="todo-row-controls">
+                            
+                                    <Button class="btn btn-primary" @onclick="@(async() => await OnEdittodoClicked(todo))">
+                                        Edit
+                                    </Button>
+                                    <Button class="btn btn-danger"  @onclick="@(async() => await OnDeletetodoClicked(todo))">
+                                        Delete
+                                    </Button>
+                            
+                            
+                        </span>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code
+{
+
+    private List<TodoDTO> _todos = new List<TodoDTO>();
+    private bool _loadingtodos = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await ReloadtodosAsync();
+    }
+
+    private async Task OnAddtodoClicked()
+    {
+        var url = $"/todoedit";
+
+        NavigationManager.NavigateTo(url);
+
+    }
+
+    private async Task OnEdittodoClicked(TodoDTO todo)
+    {
+        var url = $"/todoedit/{todo.Id}";
+
+        NavigationManager.NavigateTo(url);
+    }
+
+    private async Task OnDeletetodoClicked(TodoDTO todo)
+    {
+        await TodoService.DeleteTodoAsync(todo.Id.ToString());
+        await ReloadtodosAsync();
+
+    }
+
+
+
+    private async Task ReloadtodosAsync()
+    {
+        _loadingtodos = true;
+
+        _todos = await TodoService.GetTodosAsync();
+
+        _loadingtodos = false;
+    }
+}

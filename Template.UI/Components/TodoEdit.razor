@@ -1,0 +1,171 @@
+﻿@page "/todoedit/"
+@page "/todoedit/{Id}"
+
+
+@using Blazor_Template_Models
+
+@inject NavigationManager NavigationManager
+@inject TodoService TodoService
+
+
+<form @onsubmit="OnSaveClicked">
+    <h3>Todo</h3>
+
+    <label for="Name">Name:</label>
+    <input id="Name" @bind="Name" />
+
+    <label for="Details">Details:</label>
+    <input id="Details" type="text" @bind="Details" />
+
+
+    @if (!string.IsNullOrEmpty(errorMessage))
+    {
+     
+        <div class="alert alert-danger" role="alert">
+
+            <p>@errorMessage</p>
+
+        </div>
+    }
+    <br/>
+    <button class="btn btn-primary" type="submit" >Save</button>
+
+</form>  
+@code
+{
+    [Parameter]
+    public string Id { get; set; } = ""; // NOT USED
+
+    private TodoDTO _todo = new TodoDTO();
+
+    private bool inserting = false;
+
+    private string errorMessage = "";
+
+    private bool _edit = false;
+    private string Name = "";
+    private string Details = "";    
+    private Guid guid = Guid.NewGuid();
+    private bool _error = false;
+    private bool _errorMessage = false;
+    private bool _hide = false;
+
+    protected async override Task OnInitializedAsync()
+    {
+        if (!String.IsNullOrEmpty(Id))
+        {
+            var todo = await TodoService.GetTodoAsync(Id);
+            inserting = false;
+            Name = todo.Name;
+            Details = todo.Details;
+            guid = todo.Id;
+        }
+    }
+
+
+
+    public static bool IsAlphaNum(string str)
+    {
+        if (string.IsNullOrEmpty(str))
+            return false;
+
+        return (str.ToCharArray().All(c => Char.IsLetter(c) || Char.IsNumber(c)));
+    }
+
+    //Nathan: Validation code since not enough time to research Blazorise
+    private string Validatetodo()
+    {
+        string output = "";
+        bool passed = true;
+
+
+        if (String.IsNullOrEmpty(Name))
+        {
+            passed = false;
+            output += "Name is required. ";
+        }
+        if (String.IsNullOrEmpty(Details))
+        {
+            passed = false;
+            output += "Details is required. ";
+        }
+
+
+        return output;
+    }
+
+    private async Task OnSaveClicked()
+    {
+        //Nathan: is it valid?
+        string str = Validatetodo();
+        if (str != "")
+        {
+            _errorMessage = true;
+            errorMessage = str;
+            return;
+        }
+        else
+        {
+            _errorMessage = false;
+            errorMessage = "";
+            TodoDTO todo = new TodoDTO();
+            todo.Name = Name;
+            todo.Details = Details;
+
+            try
+            {
+                if (inserting)
+                {
+                    await TodoService.AddTodoAsync(todo);
+                }
+                else
+                {
+                    todo.Id = guid;
+                    await TodoService.UpdateTodoAsync(todo);
+                }
+            }
+            catch (Exception ex)
+            {
+                errorMessage = ex.Message;
+                return;
+            }
+            
+            NavigationManager.NavigateTo("/todos");
+        }
+        
+        //end validation
+
+        try
+        {
+
+        
+            
+        }
+        catch (Exception)
+        {
+            _error = true;
+        }
+        finally
+        {
+            
+        }
+        
+    }
+
+    private async Task OnCancelClicked()
+    {
+        
+    }
+
+
+    private void Reset()
+    {
+        _todo = new TodoDTO();
+        
+
+        _edit = false;
+        
+        _error = false;
+        _hide = false;
+    }
+}
