@@ -6,6 +6,11 @@ on:
     push:
         branches:
             - main
+
+env:
+    AZURE_WEB_APP_NAME: 'Cbc-Api-Test'
+    AZURE_WEBAPP_PACKAGE_PATH: './publish'
+    API_PUBLISH_SECRET: $${{ secrets.API_PUBLISH_SECRET }}
 jobs: 
     build:
         runs-on: ubuntu-latest
@@ -23,3 +28,15 @@ jobs:
 
             - name: Test
               run: dotnet test ./Template.API/Template.API.csproj --no-restore --verbosity normal
+
+            - name: Publish
+              run: dotnet publish ./Template.API/Template.API.csproj --output ./publish
+
+            - name: Deploy to azure
+              uses: azure/webapps-deploy@v2
+              with: 
+                  app-name: ${{ env.AZURE_WEBAPP_NAME }}
+                  publish-profile: $${{ secrets.API_PUBLISH_SECRET }}
+                  package: ./publish
+
+                
