@@ -39,6 +39,13 @@ namespace Blazor_Template_API.Controllers
     
         }
 
+        [HttpGet("/test")]
+        public async Task<ActionResult<bool>> Login(string username, string password)
+        {
+            
+            return Ok("1");
+
+        }
 
 
         [HttpGet("/todos")]
