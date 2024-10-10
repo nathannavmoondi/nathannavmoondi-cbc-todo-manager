@@ -40,7 +40,7 @@ namespace Blazor_Template_API.Controllers
         }
 
         [HttpGet("/test")]
-        public async Task<ActionResult<bool>> test(string username, string password)
+        public async Task<ActionResult<string>> test()
         {
             
             return Ok("1");
