@@ -23,3 +23,11 @@ jobs:
 
             - name: Test
               run: dotnet test ./Template.API/Template.API.csproj --no-restore --verbosity normal
+
+            - name: Publish
+              run: dotnet publish ./Template.API/Template.API.csproj --output ./publish
+
+            - name: Deploy
+              run: dotnet publish ./Template.API/Template.API.csproj --output ./publish
+
+                
