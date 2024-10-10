@@ -44,7 +44,14 @@ namespace Blazor_Template_API.Controllers
         [HttpGet("/todos")]
         public async Task<ActionResult<List<TodoDTO>>> GetTodosAsync()
         {
-            return await _todoDbContext.Todos.ToListAsync();            
+            try
+            {
+                return await _todoDbContext.Todos.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet("/todo/{todoId}")]
