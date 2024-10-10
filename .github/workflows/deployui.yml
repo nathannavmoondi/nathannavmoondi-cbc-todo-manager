@@ -8,7 +8,7 @@ on:
             - main
 
 env:
-    AZURE_WEB_APP_NAME: 'Cbc-UI-Test'
+    AZURE_WEB_APP_NAME: 'cbc-ui-test.azurewebsites.net'
     AZURE_WEBAPP_PACKAGE_PATH: './publish'
     UI_PUBLISH_SECRET: $${{ secrets.UI_PUBLISH_SECRET }}
 jobs: 
