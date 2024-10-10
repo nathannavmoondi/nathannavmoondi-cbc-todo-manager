@@ -1,0 +1,42 @@
+# github action to deploy UI to azure
+
+name: Deploy UI to Azure
+
+on:
+    push:
+        branches:
+            - main
+
+env:
+    AZURE_WEB_APP_NAME: 'Cbc-UI-Test'
+    AZURE_WEBAPP_PACKAGE_PATH: './publish'
+    UI_PUBLISH_SECRET: $${{ secrets.UI_PUBLISH_SECRET }}
+jobs: 
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - name: Setup .NET Cores
+              uses: actions/setup-dotnet@v3
+              with:
+                  dotnet-version: 7.0.xs
+            - name: Restore dependencies
+              run: dotnet restore ./Template.UI/Template.UI.csproj
+
+            - name: Build
+              run: dotnet build ./Template.UI/Template.UI.csproj --configuration Release --no-restore
+
+            - name: Test
+              run: dotnet test ./Template.UI/Template.UI.csproj --no-restore --verbosity normal
+
+            - name: Publish
+              run: dotnet publish ./Template.UI/Template.UI.csproj --output ./publish
+
+            - name: Deploy to azure
+              uses: azure/webapps-deploy@v2
+              with: 
+                  app-name: ${{ env.AZURE_WEBAPP_NAME }}
+                  publish-profile: $${{ secrets.UI_PUBLISH_SECRET }}
+                  package: ./publish
+
+                
