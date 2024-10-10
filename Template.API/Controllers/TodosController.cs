@@ -106,7 +106,7 @@ namespace Blazor_Template_API.Controllers
             {
                 _todoDbContext.ChangeTracker.Clear(); //fix error about tracking
                 _todoDbContext.Todos.Update(todo);
-                _todoDbContext.SaveChanges();
+                _todoDbContext.SaveChanges(); 
             }
             catch (Exception ex)
             {
