@@ -4,6 +4,7 @@
 @inject IJSRuntime JsRuntime
 @inject TodoService TodoService
 @inject NavigationManager NavigationManager
+@inject GlobalVariableService globalVariableService
 
 @if (_loadingtodos)
 {
@@ -59,7 +60,10 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        if (globalVariableService.UserName == "")
+            NavigationManager.NavigateTo("/");
         await ReloadtodosAsync();
+
     }
 
     private async Task OnAddtodoClicked()

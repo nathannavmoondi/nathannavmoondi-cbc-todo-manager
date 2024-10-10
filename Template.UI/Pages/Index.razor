@@ -3,32 +3,36 @@
 @inject IJSRuntime JSRuntime
 @inject NavigationManager NavigationManager
 @inject TodoService TodosService
+@inject GlobalVariableService globalVariableService
 
 <PageTitle>CBC Todo Manager</PageTitle>
 
-<form @onsubmit="Login">
-    <h3>Login</h3>
 
-    <label for="username">Username:</label>
-    <input id="username" @bind="Username" />
 
-    <label for="password">Password:</label>
-    <input id="password" type="text" @bind="Password" />    
-   
+            <form @onsubmit="Login">
+                <h3>Login</h3>
 
-    @if (!string.IsNullOrEmpty(ErrorMessage))
-    {
-     
-        <div class="alert alert-danger" role="alert">
+                <label for="username">Username:</label>
+                <input id="username" @bind="Username" />
 
-            <p>@ErrorMessage</p>
+                <label for="password">Password:</label>
+                <input id="password" type="text" @bind="Password" />
 
-        </div>
-    }
-    <br/>
-    <button class="btn btn-primary" type="submit" @ref="submitButton" @onclick="Login">Login</button>
 
-</form>  
+                @if (!string.IsNullOrEmpty(ErrorMessage))
+                {
+
+                    <div class="alert alert-danger" role="alert">
+
+                        <p>@ErrorMessage</p>
+
+                    </div>
+                }
+    <br /><br />
+                <button class="btn btn-primary" type="submit" @ref="submitButton" @onclick="Login">Login</button>
+
+            </form>
+
 
 
 
@@ -59,7 +63,10 @@
             ErrorMessage = "Invalid username or password";
             StateHasChanged();
         }
-          else
+        else
+        {
+            globalVariableService.UserName = "Admin";
             NavigationManager.NavigateTo("/todos");
+          }
     }
 }

@@ -3,17 +3,57 @@
 <PageTitle>Template.UI</PageTitle>
 
 <div class="page">
-    <div class="sidebar">
+ @*    <div class="sidebar">
         <NavMenu />
     </div>
-
-    <main>
-        <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+ *@
+    <div id="main">
+        <div id="header">
+            <div id="logo">
+                <div id="logo_text">
+                    <!-- class="logo_colour", allows you to change the colour of the text -->
+                    <h1><a href="index.html">
+                         <img class="cbcimage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/CBC_Logo_1992-Present.svg/2048px-CBC_Logo_1992-Present.svg.png"/>
+                            <span class="logo_colour2">Canadian&nbsp;</span><span class="logo_colour">Broadcasting&nbsp;</span><span class="logo_colour2">Corporation</span>
+                        </a>
+                    </h1>
+                    <h2>CBC ToDo Manager by Nathan Nav Moondi</h2>
+                </div>
+            </div>
+            <div id="menubar">
+                <ul id="menu">
+                    <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
+                    <li class="selected"><a href="/">Home</a></li>
+                    <li>
+                        <NavLink class="nav-link" href="/todos" Match="NavLinkMatch.All">
+                            <span class="oi oi-home" aria-hidden="true"></span> Todos
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink class="nav-link" href="/todos" Match="NavLinkMatch.All">
+                            <span class="oi oi-home" aria-hidden="true"></span> Instructions
+                        </NavLink>
+                    </li>                   
+                    <li><a href="http://linkedin.com/in/nathan-nav-moondi">Linkedin</a></li>
+                    <li>
+                        <NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
+                            <span class="oi oi-home" aria-hidden="true"></span> Contact
+                        </NavLink>
+                    </li>
+                    
+                </ul>
+            </div>
         </div>
-
-        <article class="content px-4">
+        <div id="site_content">
             @Body
-        </article>
-    </main>
+        </div>
+    <div id="footer">
+      Copyright &copy; black_pink_white | <a href="http://validator.w3.org/check?uri=referer">HTML5</a> | <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a> | from <a href="http://www.html5webtemplates.co.uk">free HTML5 templates</a>
+    </div>
+  </div>
+
 </div>
+
+        
+   
+

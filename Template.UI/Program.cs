@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<TodoService>();
+builder.Services.AddSingleton<GlobalVariableService>();
 
 var app = builder.Build();
 
