@@ -1,0 +1,25 @@
+# github action to deploy api to azure
+
+name: Deploy API to Azure
+
+on:
+    push:
+        branches:
+            - main
+jobs: 
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - name: Setup .NET Core
+              uses: actions/setup-dotnet@v3
+              with:
+                  dotnet-version: 7.0.x
+            - name: Restore dependencies
+              run: dotnet restore ./Template.Api/Template.Api.csproj
+
+            - name: Build
+              run: dotnet build ./Template.Api/Template.Api.csproj --configuration Release --no-restore
+
+            - name: Test
+              run: dotnet test ./Template.Api/Template.Api.csproj --no-restore --verbosity normal
