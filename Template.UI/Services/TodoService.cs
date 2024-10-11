@@ -29,8 +29,8 @@ namespace Template.UI.Services
         public async Task<bool> Login(string username, string password)
         {
 
-            ///HttpResponseMessage response = await client.GetAsync($"/login?username={username}&password={password}");
-            HttpResponseMessage response = await client.GetAsync($"/login?username=admin&password=admin");
+            HttpResponseMessage response = await client.GetAsync($"/login?username={username}&password={password}");
+            //HttpResponseMessage response = await client.GetAsync($"/login?username=admin&password=admin");
 
             if (response.IsSuccessStatusCode)
             {

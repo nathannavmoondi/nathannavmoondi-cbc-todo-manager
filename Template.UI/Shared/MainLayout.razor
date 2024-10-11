@@ -1,12 +1,22 @@
 ﻿@inherits LayoutComponentBase
+@using Blazored.Toast.Configuration
 
-<PageTitle>Template.UI</PageTitle>
+
+<PageTitle>CBC ToDo Manager</PageTitle>
+
+
 
 <div class="page">
  @*    <div class="sidebar">
         <NavMenu />
     </div>
  *@
+    <BlazoredToasts Position="ToastPosition.TopRight"
+                    Timeout="4"
+                    IconType="IconType.FontAwesome"
+                    SuccessClass="success-toast-override"
+                    SuccessIcon="fa fa-thumbs-up"
+                    ErrorIcon="fa fa-bug" />
     <div id="main">
         <div id="header">
             <div id="logo">
@@ -30,14 +40,16 @@
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink class="nav-link" href="/todos" Match="NavLinkMatch.All">
-                            <span class="oi oi-home" aria-hidden="true"></span> Instructions
+                        <NavLink class="nav-link" href="/details" Match="NavLinkMatch.All">
+                            <span class="" aria-hidden="true"></span> Details
                         </NavLink>
                     </li>                   
-                    <li><a href="http://linkedin.com/in/nathan-nav-moondi">Linkedin</a></li>
                     <li>
-                        <NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
-                            <span class="oi oi-home" aria-hidden="true"></span> Contact
+                        <a href="http://linkedin.com/in/nathan-nav-moondi">Linkedin</a>
+                    </li>
+                    <li>
+                        <NavLink class="nav-link" href="mailto:nav.moondi@gmail.com" Match="NavLinkMatch.All">
+                            <span class="" aria-hidden="true"></span> Contact
                         </NavLink>
                     </li>
                     

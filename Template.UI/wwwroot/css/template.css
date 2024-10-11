@@ -13,10 +13,11 @@ body {
     -o-background-size: cover;
     background-size: cover;
     color: white;
+    background-color: #000;
 }
 
 p
-{ padding: 0 0 20px 0;
+{ 
   line-height: 1.7em;}
 
 img
@@ -70,12 +71,12 @@ blockquote
   background: #FFF;}
 
 ul
-{ margin: 2px 0 22px 17px;}
+{ 
+    }
 
 ul li
 { list-style-type: circle;
-  margin: 0 0 6px 0; 
-  padding: 0 0 4px 5px;}
+  }
 
 ol
 { margin: 8px 0 22px 20px;}
@@ -284,9 +285,11 @@ ul#menu li a:hover, ul#menu li.selected a, ul#menu li.selected a:hover
   border-top: 1px solid #D9D5CF;
   border-bottom: 1px solid #FFF;
   margin: 0 0 20px 0;}
-  
-table
-{ margin: 10px 0 30px 0;}
+
+table {
+    margin: 10px 0 30px 0;
+    border-color: red;
+}
 
 table tr th, table tr td
 { background: #3B3B3B;
@@ -309,4 +312,12 @@ form {
     margin: 10px;
     padding: 20px;
     color: white;
+    border-color: red;
+}
+tr {
+    border-width: revert;
+}
+
+.table {
+    border-color: red;
 }

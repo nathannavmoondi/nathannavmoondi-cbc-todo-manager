@@ -1,5 +1,7 @@
 ﻿@page "/"
+@using Blazored.Toast.Services
 @using Template.UI.Services
+@inject IToastService toastService
 @inject IJSRuntime JSRuntime
 @inject NavigationManager NavigationManager
 @inject TodoService TodosService
@@ -7,33 +9,43 @@
 
 <PageTitle>CBC Todo Manager</PageTitle>
 
-
+<div class="sidebar">
+    <!-- insert your sidebar items here -->
+    <h3>Technology Stack</h3>
+    <h4>.NET 7.0</h4>
+    <h5>Blazor</h5>
+    <p>API with SQLite Database.  Hosted on Azure account with GitHub actions to automatically publish.</p>
+    <h4>Source Code</h4>   
+    <p>GitHub <a href="#">Link</a></p>
+  
+</div>
+  <div id="content">
 
             <form @onsubmit="Login">
                 <h3>Login</h3>
-
-                <label for="username">Username:</label>
-                <input id="username" @bind="Username" />
-
-                <label for="password">Password:</label>
-                <input id="password" type="text" @bind="Password" />
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input id="username" class="form-control" @bind="Username" />
+                </div>
+                <br/>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input id="password" class="form-control"  type="text" @bind="Password" />
+                </div>
 
 
                 @if (!string.IsNullOrEmpty(ErrorMessage))
                 {
-
+                    <br/>
                     <div class="alert alert-danger" role="alert">
-
-                        <p>@ErrorMessage</p>
-
+                        @ErrorMessage
                     </div>
                 }
-    <br /><br />
-                <button class="btn btn-primary" type="submit" @ref="submitButton" @onclick="Login">Login</button>
+                 <br /><br />
+                <button class="btn btn-primary" type="submit" @ref="submitButton">Login</button>
 
             </form>
-
-
+</div>
 
 
 @code {
@@ -60,6 +72,7 @@
 
         if (result == false)
         {
+            toastService.ShowError("Invalid username or password");
             ErrorMessage = "Invalid username or password";
             StateHasChanged();
         }

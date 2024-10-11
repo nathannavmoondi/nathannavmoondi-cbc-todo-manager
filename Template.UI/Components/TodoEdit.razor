@@ -6,16 +6,20 @@
 
 @inject NavigationManager NavigationManager
 @inject TodoService TodoService
+@inject IToastService toastService
 
 
 <form @onsubmit="OnSaveClicked">
-    <h3>Todo</h3>
+    <h3>@(inserting  ? "Create" : "Save") Todo</h3>
+    <div class="form-group">
+        <label for="Name">Name:</label>
+        <input id="Name" class="form-control" @bind="Name" />
+    </div>
 
-    <label for="Name">Name:</label>
-    <input id="Name" @bind="Name" />
-
-    <label for="Details">Details:</label>
-    <input id="Details" type="text" @bind="Details" />
+    <div class="form-group">
+        <label for="Details">Details:</label>
+        <input id="Details" class="form-control"  type="text" @bind="Details" />
+    </div
 
 
     @if (!string.IsNullOrEmpty(errorMessage))
@@ -28,7 +32,7 @@
         </div>
     }
     <br/>
-    <button class="btn btn-primary" type="submit" >Save</button>
+    <button class="btn btn-primary" type="submit" >@(inserting  ? "Create" : "Save")</button>
 
 </form>  
 @code
@@ -126,6 +130,8 @@
                     todo.Id = guid;
                     await TodoService.UpdateTodoAsync(todo);
                 }
+
+                    toastService.ShowSuccess(inserting ? "Created" : "Saved");
             }
             catch (Exception ex)
             {
