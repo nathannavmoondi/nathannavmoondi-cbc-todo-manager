@@ -9,6 +9,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CBC.Models", "Template.Mode
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CBC.API", "Template.API\CBC.API.csproj", "{D2C763F1-2F8A-438C-A366-0FBAB6FE3555}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bicep", "Bicep", "{1B66181A-3091-4238-9E37-A0BF45EB42F9}"
+	ProjectSection(SolutionItems) = preProject
+		appservice.bicep = appservice.bicep
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CBC.Tests", "CBC.Tests\CBC.Tests.csproj", "{B6FD299F-E6D1-415E-B2D4-F46A89B56F65}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +34,10 @@ Global
 		{D2C763F1-2F8A-438C-A366-0FBAB6FE3555}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2C763F1-2F8A-438C-A366-0FBAB6FE3555}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2C763F1-2F8A-438C-A366-0FBAB6FE3555}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6FD299F-E6D1-415E-B2D4-F46A89B56F65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6FD299F-E6D1-415E-B2D4-F46A89B56F65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6FD299F-E6D1-415E-B2D4-F46A89B56F65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6FD299F-E6D1-415E-B2D4-F46A89B56F65}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
