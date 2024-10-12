@@ -9,12 +9,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CBC.Models", "Template.Mode
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CBC.API", "Template.API\CBC.API.csproj", "{D2C763F1-2F8A-438C-A366-0FBAB6FE3555}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bicep", "Bicep", "{1B66181A-3091-4238-9E37-A0BF45EB42F9}"
-	ProjectSection(SolutionItems) = preProject
-		appservice.bicep = appservice.bicep
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CBC.Tests", "CBC.Tests\CBC.Tests.csproj", "{B6FD299F-E6D1-415E-B2D4-F46A89B56F65}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bicep", "Bicep", "{D967B75E-FC61-4BA3-84C1-3B2D06E2194F}"
+	ProjectSection(SolutionItems) = preProject
+		Bicep\appservice.bicep = Bicep\appservice.bicep
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
