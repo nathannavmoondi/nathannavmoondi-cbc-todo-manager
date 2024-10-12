@@ -6,6 +6,10 @@ using Blazor_Template_Models;
 using Microsoft.EntityFrameworkCore;
 using System.Net.Http;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Blazor_Template_API.Controllers
 {
@@ -17,14 +21,15 @@ namespace Blazor_Template_API.Controllers
     {
         private readonly ILogger<TodosController> _logger;
         private readonly TodoDbContext _todoDbContext;
-
+        private readonly IConfiguration config;
 
         public TodosController(
             ILogger<TodosController> logger,
-            TodoDbContext todoDbContext)
+            TodoDbContext todoDbContext, IConfiguration config)
         {
             _logger = logger;
             _todoDbContext = todoDbContext;
+            this.config = config;
         }
 
         [HttpGet("/login")]
@@ -35,11 +40,24 @@ namespace Blazor_Template_API.Controllers
                 return BadRequest("Invalid Username or Password");
             }
 
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Jwt:Key"]));
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+
+            var Sectoken = new JwtSecurityToken(config["Jwt:Issuer"],
+              config["Jwt:Issuer"],
+              null,
+              expires: DateTime.Now.AddMinutes(120),
+              signingCredentials: credentials);
+
+            var token = new JwtSecurityTokenHandler().WriteToken(Sectoken);
+
+            return Ok(token);
+
             return Ok(true);
     
         }
 
-        [HttpGet("/test")]
+        [HttpGet("/test")]        
         public async Task<ActionResult<string>> test()
         {
             
@@ -49,6 +67,7 @@ namespace Blazor_Template_API.Controllers
 
 
         [HttpGet("/todos")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<ActionResult<List<TodoDTO>>> GetTodosAsync()
         {
             try
@@ -62,6 +81,7 @@ namespace Blazor_Template_API.Controllers
         }
 
         [HttpGet("/todo/{todoId}")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<ActionResult<TodoDTO>> GetTodoAsync(Guid todoId)
         {
             var todo = await _todoDbContext.FindAsync<TodoDTO>(todoId);
@@ -72,6 +92,7 @@ namespace Blazor_Template_API.Controllers
         }
 
         [HttpDelete("/todo/{todoId}")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<ActionResult> Deletetodo(Guid todoId)
         {
             var todo = await _todoDbContext.Set<TodoDTO>().FindAsync(todoId); //var since might be null and guid can never be null (or Todo?)
@@ -84,6 +105,7 @@ namespace Blazor_Template_API.Controllers
         }
 
         [HttpPost("/todo")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<ActionResult<Guid>> AddTodo(TodoDTO todo)
         {
             //NATHAN: Should validate
@@ -103,6 +125,7 @@ namespace Blazor_Template_API.Controllers
 
 
         [HttpPut("/todo/{todoId}")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<ActionResult> UpdateTodo(Guid todoId, TodoDTO todo)
         {
             var existingtodo = await _todoDbContext.FindAsync<TodoDTO>(todoId); //have to use var since Guid is never null

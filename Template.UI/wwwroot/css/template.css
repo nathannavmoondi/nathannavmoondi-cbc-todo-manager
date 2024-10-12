@@ -211,8 +211,7 @@ ul#menu li a:hover, ul#menu li.selected a, ul#menu li.selected a:hover
   padding: 24px 0 5px 0;
   text-align: center; 
   background: transparent;
-  color: #000;
-  text-transform: uppercase;
+  color: #fff;  
   letter-spacing: 0.1em;}
 
 #footer a

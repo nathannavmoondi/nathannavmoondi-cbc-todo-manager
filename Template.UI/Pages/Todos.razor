@@ -61,8 +61,9 @@ else
     protected override async Task OnInitializedAsync()
     {
         if (globalVariableService.UserName == "")
-            NavigationManager.NavigateTo("/");
-        await ReloadtodosAsync();
+                NavigationManager.NavigateTo("/");
+            else
+                await ReloadtodosAsync();
 
     }
 

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Globalization;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -13,15 +14,19 @@ namespace Template.UI.Services
     {
         private readonly HttpClient client;
         private readonly IConfiguration configuration;
+        private readonly GlobalVariableService globalVariableService;
 
-        public TodoService(IConfiguration configuration)
+        public TodoService(IConfiguration configuration, GlobalVariableService globalVariableService)
         {
             this.configuration = configuration;
+            this.globalVariableService = globalVariableService;
             var url = configuration["BackendUrl"];
 
             this.client = new HttpClient { BaseAddress = new Uri(url) };
             this.client.DefaultRequestHeaders.Accept.Add(
              new MediaTypeWithQualityHeaderValue("application/json"));
+
+            
             //this.client.DefaultRequestHeaders.Add("x-api-key", "api-key");
 
         }
@@ -35,8 +40,9 @@ namespace Template.UI.Services
             if (response.IsSuccessStatusCode)
             {
 
-                string json = await response.Content.ReadAsStringAsync();
-                dynamic result = JsonConvert.DeserializeObject(json);
+                string token = await response.Content.ReadAsStringAsync();
+                globalVariableService.AccessToken = token.Trim('\"');
+                //dynamic result = JsonConvert.DeserializeObject(json);                
                 //var ret = result.title;
                 return true;
             }
@@ -48,20 +54,40 @@ namespace Template.UI.Services
 
         public async Task<List<TodoDTO>> GetTodosAsync()
         {
+            try
+            {
 
-            var results = await client.GetFromJsonAsync<List<TodoDTO>>("/todos");
-            if (results != null)
-            {
-                return results;
+                AddToken();
+
+                var results = await this.client.GetFromJsonAsync<List<TodoDTO>>("/todos");
+                if (results != null)
+                {
+                    return results;
+                }
+                else
+                {
+                    throw new Exception("Error loading todos");
+                }
             }
-            else
+            catch(Exception ex)
             {
-                throw new Exception("Error loading todos");
+                throw new Exception("could not make todos call");
             }
         }
 
+        private void AddToken()
+        {
+
+            var token = globalVariableService.AccessToken;
+            //this.client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", (string)"Bearer " + token);
+            //this.client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", token);
+            this.client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+            this.client.DefaultRequestHeaders.TryAddWithoutValidation("Grpc-Metadata-Authorization", (string)"Bearer " + token);
+            this.client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        }
         public async Task<TodoDTO> GetTodoAsync(string id)
         {
+            AddToken();
 
             var results = await client.GetFromJsonAsync<TodoDTO>($"/todo/{id}");
             if (results != null)
@@ -76,6 +102,7 @@ namespace Template.UI.Services
 
         public async Task AddTodoAsync(TodoDTO todo)
         {
+            AddToken();
             var response = await client.PostAsJsonAsync("/todo", todo);
 
             if (!response.IsSuccessStatusCode)
@@ -86,6 +113,7 @@ namespace Template.UI.Services
 
         public async Task UpdateTodoAsync(TodoDTO todo)
         {
+            AddToken();
             var response = await client.PutAsJsonAsync($"/todo/{todo.Id}", todo); //puts todo in body
             if (!response.IsSuccessStatusCode)
             {
@@ -93,8 +121,9 @@ namespace Template.UI.Services
             }
         }
 
-            public async Task DeleteTodoAsync(string id)
+        public async Task DeleteTodoAsync(string id)
         {
+            AddToken();
             var response = await client.DeleteAsync($"/todo/{id}");
 
             if (!response.IsSuccessStatusCode)
