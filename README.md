@@ -7,8 +7,21 @@
 username: admin
 password: admin
 
+<h2>URL</h2>
+https://cbc-ui-test.azurewebsites.net/
+https://cbc-api-test.azurewebsites.net/
+
 <h3>Steps</h3>
 clone
 run API and UI project
+
+<h3>API Project</h3>
+
+url is: https://cbc-api-test.azurewebsites.net/
+
+to test: https://cbc-api-test.azurewebsites.net/test
+
+to login and get JWT token in postman:
+https://cbc-api-test.azurewebsites.net/login?username=admin&password=admin
 
 Have fun!
