@@ -8,7 +8,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 
-namespace Template.UI.Services
+namespace CBC.UI.Services
 {
     public class TodoService
     {

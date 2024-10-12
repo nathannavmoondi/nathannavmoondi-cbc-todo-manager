@@ -11,17 +11,17 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Template.UI/Template.UI.csproj", "Template.UI/"]
-RUN dotnet restore "./Template.UI/Template.UI.csproj"
+COPY ["CBC.UI/CBC.UI.csproj", "CBC.UI/"]
+RUN dotnet restore "./CBC.UI/CBC.UI.csproj"
 COPY . .
-WORKDIR "/src/Template.UI"
-RUN dotnet build "./Template.UI.csproj" -c %BUILD_CONFIGURATION% -o /app/build
+WORKDIR "/src/CBC.UI"
+RUN dotnet build "./CBC.UI.csproj" -c %BUILD_CONFIGURATION% -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./Template.UI.csproj" -c %BUILD_CONFIGURATION% -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./CBC.UI.csproj" -c %BUILD_CONFIGURATION% -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Template.UI.dll"]
+ENTRYPOINT ["dotnet", "CBC.UI.dll"]

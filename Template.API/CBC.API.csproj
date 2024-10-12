@@ -34,7 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Template.Models\Template.Models.csproj" />
+    <ProjectReference Include="..\Template.Models\CBC.Models.csproj" />
   </ItemGroup>
 
 </Project>

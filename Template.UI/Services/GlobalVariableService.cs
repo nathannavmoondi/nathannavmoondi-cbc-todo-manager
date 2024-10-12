@@ -1,4 +1,4 @@
-﻿namespace Template.UI.Services
+﻿namespace CBC.UI.Services
 {
     public class GlobalVariableService
     {
