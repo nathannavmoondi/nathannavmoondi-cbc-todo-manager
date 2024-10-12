@@ -9,6 +9,7 @@ password: admin
 
 <h2>URL</h2>
 https://cbc-ui-test.azurewebsites.net/
+<br/>
 https://cbc-api-test.azurewebsites.net/
 
 <h3>Steps</h3>
