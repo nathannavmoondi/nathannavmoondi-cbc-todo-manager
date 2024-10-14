@@ -25,4 +25,12 @@ to test: https://cbc-api-test.azurewebsites.net/test
 to login and get JWT token in postman:
 https://cbc-api-test.azurewebsites.net/login?username=admin&password=admin
 
-Have fun!
+<h3>GitHub Actions</h3>
+
+There are two Github actions to deploy API and UI automatically to azure.
+Any changes results in: build, test, deploy and publish.
+
+You can git clone, change, commit and then see CI/CD process in realtime in Actions panel on github.
+
+Thank you.
+Nathan
