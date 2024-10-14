@@ -13,8 +13,9 @@ https://cbc-ui-test.azurewebsites.net/
 https://cbc-api-test.azurewebsites.net/
 
 <h3>Steps</h3>
-clone
-run API and UI project
+git clone<br/>
+modify appsettings.development.json as needed
+run API and UI project together
 
 <h3>API Project</h3>
 
