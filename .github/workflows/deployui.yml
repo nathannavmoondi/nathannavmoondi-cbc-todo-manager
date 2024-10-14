@@ -21,16 +21,16 @@ jobs:
               with:
                   dotnet-version: 7.0.x
             - name: Restore dependencies
-              run: dotnet restore ./Template.UI/Template.UI.csproj
+              run: dotnet restore ./Template.UI/App.UI.csproj
 
             - name: Build
-              run: dotnet build ./Template.UI/Template.UI.csproj --configuration Release --no-restore
+              run: dotnet build ./Template.UI/App.UI.csproj --configuration Release --no-restore
 
             - name: Test
-              run: dotnet test ./Template.UI/Template.UI.csproj --no-restore --verbosity normal
+              run: dotnet test ./Template.UI/App.UI.csproj --no-restore --verbosity normal
 
             - name: Publish
-              run: dotnet publish ./Template.UI/Template.UI.csproj --output ./publish
+              run: dotnet publish ./Template.UI/App.UI.csproj --output ./publish
 
             - name: Deploy to azure
               uses: azure/webapps-deploy@v2
