@@ -29,7 +29,7 @@ https://cbc-api-test.azurewebsites.net/login?username=admin&password=admin
 <h3>GitHub Actions</h3>
 
 There are two Github actions to deploy API and UI automatically to azure.
-Any changes results in: build, test, deploy and publish.
+Any changes results in: build, test, publish and deploy.
 
 You can git clone, change, commit and then see CI/CD process in realtime in Actions panel on github.
 
