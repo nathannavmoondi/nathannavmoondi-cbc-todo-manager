@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using CBC.UI.Data;
 using CBC.UI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
